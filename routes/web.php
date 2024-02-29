@@ -20,4 +20,21 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/second-link', fn () => 'Second Link')->name('second');
+
+
+Route::get('/options-api', function () {
+    return Inertia::render('Users/Options', [
+        'name' => 'Chong',
+        'birthdate' => 'September 11, 1992'
+    ]);
+});
+
+Route::get('/composition-api', function () {
+    return Inertia::render('Users/Composition', [
+        'name' => 'Chong',
+        'birthdate' => 'September 11, 1992'
+    ]);
+});
+
+
+Route::get('/results', [App\Http\Controllers\DefinitionController::class, 'show']);
