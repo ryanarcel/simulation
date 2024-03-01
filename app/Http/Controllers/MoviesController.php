@@ -10,7 +10,6 @@ class MoviesController extends Controller
 {
     public function index (Request $request)
     {
-        $data = [];
         if ($request->has('search')) {
             $search = $request->input('search');
 
@@ -21,10 +20,15 @@ class MoviesController extends Controller
                 // Handle API request failure
                 \Log::error('API request failed: ' . $e->getMessage());;
             }
+            
+            return Inertia::render('Dashboard', [
+                'response' => $data
+            ]);
         }
 
+        
         return Inertia::render('Dashboard', [
-            'response' => $data
+            'response' => []
         ]);
 
     }

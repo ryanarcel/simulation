@@ -23,8 +23,8 @@ Route::get('/', function () {
 Route::get('/dashboard', [App\Http\Controllers\MoviesController::class, 'index'])
 ->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/search', [App\Http\Controllers\MoviesController::class, 'index'])
-->middleware(['auth', 'verified'])->name('search');
+// Route::get('/search', [App\Http\Controllers\MoviesController::class, 'index'])
+// ->middleware(['auth', 'verified'])->name('search');
 
 
 Route::middleware('auth')->group(function () {
