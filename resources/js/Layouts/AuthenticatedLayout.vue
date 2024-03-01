@@ -12,7 +12,7 @@ const showingNavigationDropdown = ref(false);
 
 <template>
   <div>
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen bg-pictonBlue">
       <nav class="bg-greenBlue border-b border-gray-100">
         <!-- Primary Navigation Menu -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,7 +29,7 @@ const showingNavigationDropdown = ref(false);
               <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                   Dashboard
-              </NavLink>
+                </NavLink>
               </div>
             </div>
 
@@ -71,13 +71,11 @@ const showingNavigationDropdown = ref(false);
                   <path :class="{
                     hidden: showingNavigationDropdown,
                     'inline-flex': !showingNavigationDropdown,
-                  }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 6h16M4 12h16M4 18h16" />
+                  }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                   <path :class="{
                     hidden: !showingNavigationDropdown,
                     'inline-flex': showingNavigationDropdown,
-                  }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12" />
+                  }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
