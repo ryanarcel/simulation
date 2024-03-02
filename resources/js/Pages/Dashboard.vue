@@ -19,11 +19,14 @@
       </button>
     </form>
 
-    <ul v-if="searchResults">
-      <li v-for="movie in searchResults">
-        {{ movie.Title }}
-      </li>
-    </ul>
+    <div class="w-3/5 mx-auto">
+      <div v-if="searchResults" class="grid grid-cols-3 gap-3 mt-10">
+        <!-- <li v-for="movie in searchResults">
+          {{ typeof movie }}
+        </li> -->
+        <Movie v-for="movie in searchResults" :movie="movie"/>
+      </div>
+    </div>
 
   </AuthenticatedLayout>
 </template>
@@ -31,6 +34,7 @@
 <script setup>
 import { ref, reactive, watch } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Movie from './Movie.vue';
 import { Head, router } from '@inertiajs/vue3';
 
 const props = defineProps(['response']);
