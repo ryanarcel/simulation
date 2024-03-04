@@ -2,7 +2,7 @@
   <div class="border mx-auto rounded shadow-2xl p-5 w-64 my-7">
     <h1 class="text-xl font-bold mb-2 h-16 flex items-center justify-center">{{ props.movie.Title }}</h1>
     <img :src="props.movie.Poster" alt="" class="mt-5">
-    <FontAwesomeIcon :icon="faEnvelope" :style="{color: 'blue'}" @click="showMovieDetails()"/>
+    <FontAwesomeIcon :icon="faEnvelope" :style="{ color: 'blue' }" @click="showFormAlert()" />
   </div>
 </template>
 
@@ -16,15 +16,24 @@ const props = defineProps({
   movie: Object
 })
 
-function showMovieDetails() {
-  Swal.fire({
-    title: props.movie.Title,
-    text: props.movie.Plot,
-    imageUrl: props.movie.Poster,
-    imageWidth: 400,
-    imageHeight: 200,
-    imageAlt: 'Custom image',
-  })
+function showFormAlert() {
+  const { value: formValues } = Swal.fire({
+    title: 'Enter your details',
+    html:
+      '<input id="swal-input1" class="swal2-input" placeholder="Name">' +
+      '<input id="swal-input2" class="swal2-input" placeholder="Email">',
+    focusConfirm: false,
+    preConfirm: () => {
+      return [
+        document.getElementById('swal-input1').value,
+        document.getElementById('swal-input2').value
+      ];
+    }
+  });
+
+  if (formValues) {
+    Swal.fire(`Name: ${formValues[0]}, Email: ${formValues[1]}`);
+  }
 }
 
 </script>
