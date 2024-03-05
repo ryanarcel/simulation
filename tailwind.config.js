@@ -22,6 +22,12 @@ export default {
                 verdigris: '#73BFB8',
                 yellow: '#FEC601',
                 pumpkin: '#ea7317',
+
+                hoverPumpkin: '#d96e16',
+
+                contrastPumpkin: '#178eea',
+
+                validationRed: '#D22B2B',
             }
         },
     },

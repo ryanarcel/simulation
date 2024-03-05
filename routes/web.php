@@ -17,11 +17,11 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return to_route('dashboard');
-})->middleware(['auth', 'verified']);
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard', [App\Http\Controllers\MoviesController::class, 'index'])
-->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/search', [App\Http\Controllers\MoviesController::class, 'index'])
+->middleware(['auth', 'verified'])->name('search');
 
 // Route::get('/search', [App\Http\Controllers\MoviesController::class, 'index'])
 // ->middleware(['auth', 'verified'])->name('search');

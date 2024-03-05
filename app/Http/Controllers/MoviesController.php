@@ -10,7 +10,12 @@ class MoviesController extends Controller
 {
     public function index (Request $request)
     {
-        if ($request->has('search')) {
+
+        $validated = $request->validate([
+            'search' => 'required',
+        ]);
+
+        if ($validated) {
             $search = $request->input('search');
 
             try {
@@ -25,12 +30,6 @@ class MoviesController extends Controller
                 'response' => $data
             ]);
         }
-
-        
-        return Inertia::render('Dashboard', [
-            'response' => []
-        ]);
-
     }
 
 }
