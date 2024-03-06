@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\LikedMovie;
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 
@@ -30,6 +33,27 @@ class MoviesController extends Controller
                 'response' => $data
             ]);
         }
+    }
+
+    public function likeMovie (Request $request)
+    {
+        $validated = $request->validate([
+            'movie_id' => 'required',
+            'title' => 'required',
+        ]);
+
+        if($request->like) {
+            LikedMovie::updateOrCreate([
+                'user_id' => auth()->user()->id,
+                'imdbID' => $validated['movie_id'],
+                'Title' => $validated['title']
+            ]);
+        } else {
+            LikedMovie::where('imdbID', $validated['imdbID'])->delete();
+        }
+
+        // return Inertia::location(url()->previous());
+       
     }
 
 }

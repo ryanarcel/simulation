@@ -23,8 +23,8 @@ Route::get('/', function () {
 Route::get('/search', [App\Http\Controllers\MoviesController::class, 'index'])
 ->middleware(['auth', 'verified'])->name('search');
 
-// Route::get('/search', [App\Http\Controllers\MoviesController::class, 'index'])
-// ->middleware(['auth', 'verified'])->name('search');
+Route::post('/like', [App\Http\Controllers\MoviesController::class, 'likeMovie'])
+->middleware(['auth', 'verified'])->name('likeMovie');
 
 
 Route::middleware('auth')->group(function () {
