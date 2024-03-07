@@ -13,12 +13,7 @@ class MoviesController extends Controller
 {
     public function index (Request $request)
     {
-
-        $validated = $request->validate([
-            'search' => 'required',
-        ]);
-
-        if ($validated) {
+        if ($request->has('search')) {
             $search = $request->input('search');
 
             try {
@@ -32,8 +27,9 @@ class MoviesController extends Controller
             return Inertia::render('Dashboard', [
                 'response' => $data
             ]);
-  
         }
+
+        return Inertia::render('Dashboard');
     }
 
     public function show ($movie_id)
@@ -60,9 +56,9 @@ class MoviesController extends Controller
             LikedMovie::where('imdbID', $validated['imdbID'])->delete();
         }
 
-        return redirect()->back()->with([
+        return to_route('dashboard',[
             'movie' => $validated['title'],
-            'liked' => true
+            'liked' => $request->like ? true : false
         ]);
        
     }

@@ -17,11 +17,11 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    return redirect()->route('dashboard');
+})->middleware(['auth', 'verified']);
 
-Route::get('/index', [App\Http\Controllers\MoviesController::class, 'index'])
-->middleware(['auth', 'verified'])->name('search');
+Route::get('/dashboard', [App\Http\Controllers\MoviesController::class, 'index'])
+->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::post('/like', [App\Http\Controllers\MoviesController::class, 'likeMovie'])
 ->middleware(['auth', 'verified'])->name('likeMovie');

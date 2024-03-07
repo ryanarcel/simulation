@@ -7,11 +7,10 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
-import * as Vue from 'vue';
+import * as Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-
-import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/css/all.css'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
