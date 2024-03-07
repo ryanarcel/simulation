@@ -45,6 +45,12 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  movie: {
+    type: String,
+  },
+  liked: {
+    type: Boolean,
+  },
 });
 
 const form = reactive({
@@ -60,6 +66,10 @@ watch(searchResults, (newResults) => {
 function submitSearch() {
   // Perform the search and update the page using Inertia.js
   router.visit(route('search', { search: form.search }));
+}
+
+function fetchLikedStatus(movie_id) {
+  return router.get(route('getLikedStatus', { movie_id }));
 }
 
 </script>

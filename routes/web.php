@@ -20,11 +20,13 @@ Route::get('/', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/search', [App\Http\Controllers\MoviesController::class, 'index'])
+Route::get('/index', [App\Http\Controllers\MoviesController::class, 'index'])
 ->middleware(['auth', 'verified'])->name('search');
 
 Route::post('/like', [App\Http\Controllers\MoviesController::class, 'likeMovie'])
 ->middleware(['auth', 'verified'])->name('likeMovie');
+
+Route::get('/getLikedStatus/{movie_id}', [App\Http\Controllers\MoviesController::class, 'show'])->name('getLikedStatus');
 
 
 Route::middleware('auth')->group(function () {

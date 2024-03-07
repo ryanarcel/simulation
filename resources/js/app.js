@@ -5,6 +5,11 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+import * as Vue from 'vue';
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 import '@fortawesome/fontawesome-free/css/all.css';
 
@@ -17,6 +22,8 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(Toast)
+            .use(VueAxios, axios)
             .mount(el);
     },
     progress: {

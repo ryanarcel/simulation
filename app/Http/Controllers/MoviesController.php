@@ -32,7 +32,15 @@ class MoviesController extends Controller
             return Inertia::render('Dashboard', [
                 'response' => $data
             ]);
+  
         }
+    }
+
+    public function show ($movie_id)
+    {
+        $likedMovie = LikedMovie::where('imdbID', $movie_id)->where('user_id', auth()->user()->id)->first();
+
+        return $likedMovie ? true : false;
     }
 
     public function likeMovie (Request $request)
@@ -52,7 +60,10 @@ class MoviesController extends Controller
             LikedMovie::where('imdbID', $validated['imdbID'])->delete();
         }
 
-        // return Inertia::location(url()->previous());
+        return redirect()->back()->with([
+            'movie' => $validated['title'],
+            'liked' => true
+        ]);
        
     }
 
