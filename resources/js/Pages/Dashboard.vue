@@ -59,17 +59,16 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
-	page: Object,
 });
 
 const form = reactive({
 	search: null,
 });
 
-const searchResults = props.response ? ref(props.response.Search) : [];
+const searchResults = ref(props.response.Search);
 
 watch(searchResults, (newResults) => {
-	console.log(newResults);
+  console.log(newResults);
 });
 
 function submitSearch() {
@@ -77,25 +76,33 @@ function submitSearch() {
 }
 
 function likeMovie(data) {
-	router.post(route("likeMovie"), data, { preserveScroll: true });
+	router.post(route("likeMovie"), data, {
+    preserveScroll: true,
+    onSuccess: () => {
+      toast.success(`${data.title} liked!`, {
+        position: "bottom-center",
+        timeout: 2000,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+      });
+    },
+  });
 
-	toast.success(`${data.title} liked!`, {
-		position: "bottom-center",
-		timeout: 2000,
-		closeOnClick: true,
-		pauseOnHover: false,
-		draggable: true,
-		draggablePercent: 0.6,
-		showCloseButtonOnHover: false,
-		hideProgressBar: true,
-		closeButton: "button",
-		icon: true,
-	});
+
+
+
+  
 }
 
 function fetchLikedStatus(movie_id) {
 	return router.get(route("getLikedStatus", { movie_id }));
-}ß
+}
 
 onMounted(() => {
 

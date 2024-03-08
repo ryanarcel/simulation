@@ -32,11 +32,11 @@ class MoviesController extends Controller
         return Inertia::render('Dashboard');
     }
 
-    public function show ($movie_id)
+    public function show ($imdbID)
     {
-        $likedMovie = LikedMovie::where('imdbID', $movie_id)->where('user_id', auth()->user()->id)->first();
+        $likedMovie = LikedMovie::where('imdbID', $imdbID)->where('user_id', auth()->user()->id)->first();
 
-        return $likedMovie ? true : false;
+        return response()->json(['liked' => $likedMovie ? true : false]);
     }
 
     public function likeMovie (Request $request)

@@ -26,7 +26,7 @@ Route::get('/dashboard', [App\Http\Controllers\MoviesController::class, 'index']
 Route::post('/like', [App\Http\Controllers\MoviesController::class, 'likeMovie'])
 ->middleware(['auth', 'verified'])->name('likeMovie');
 
-Route::get('/getLikedStatus/{movie_id}', [App\Http\Controllers\MoviesController::class, 'show'])->name('getLikedStatus');
+Route::get('/check-if-liked/{imdbID}', [App\Http\Controllers\MoviesController::class, 'show'])->name('checkIfLiked');
 
 
 Route::middleware('auth')->group(function () {
