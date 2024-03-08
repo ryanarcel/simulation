@@ -26,7 +26,12 @@ Route::get('/dashboard', [App\Http\Controllers\MoviesController::class, 'index']
 Route::post('/like', [App\Http\Controllers\MoviesController::class, 'likeMovie'])
 ->middleware(['auth', 'verified'])->name('likeMovie');
 
-Route::get('/check-if-liked/{imdbID}', [App\Http\Controllers\MoviesController::class, 'show'])->name('checkIfLiked');
+Route::get('/check-if-liked/{imdbID}', [App\Http\Controllers\MoviesController::class, 'checkIfLiked'])->name('checkIfLiked');
+
+Route::post('/dislike', [App\Http\Controllers\MoviesController::class, 'dislikeMovie'])
+->middleware(['auth', 'verified'])->name('dislikeMovie');
+
+Route::get('/check-if-disliked/{imdbID}', [App\Http\Controllers\MoviesController::class, 'checkIfDisliked'])->name('checkIfDisliked');
 
 
 Route::middleware('auth')->group(function () {

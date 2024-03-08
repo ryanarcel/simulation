@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DislikedMovie;
 use App\Models\LikedMovie;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
@@ -32,7 +33,7 @@ class MoviesController extends Controller
         return Inertia::render('Dashboard');
     }
 
-    public function show ($imdbID)
+    public function checkIfLiked ($imdbID)
     {
         $likedMovie = LikedMovie::where('imdbID', $imdbID)->where('user_id', auth()->user()->id)->first();
 
@@ -53,14 +54,43 @@ class MoviesController extends Controller
                 'Title' => $validated['title']
             ]);
         } else {
-            LikedMovie::where('imdbID', $validated['imdbID'])->delete();
+            LikedMovie::where('imdbID', $validated['movie_id'])->delete();
         }
 
-        return to_route('dashboard',[
+        return response()->json([
             'movie' => $validated['title'],
             'liked' => $request->like ? true : false
         ]);
-       
+    }
+
+    public function dislikeMovie (Request $request)
+    {
+        $validated = $request->validate([
+            'movie_id' => 'required',
+            'title' => 'required',
+        ]);
+
+        if($request->dislike) {
+            DislikedMovie::updateOrCreate([
+                'user_id' => auth()->user()->id,
+                'imdbID' => $validated['movie_id'],
+                'Title' => $validated['title']
+            ]);
+        } else {
+            DislikedMovie::where('imdbID', $validated['movie_id'])->delete();
+        }
+
+        return response()->json([
+            'movie' => $validated['title'],
+            'disliked' => $request->dislike ? true : false
+        ]);
+    }
+
+    public function checkIfDisliked ($imdbID)
+    {
+        $dislikedMovie = DislikedMovie::where('imdbID', $imdbID)->where('user_id', auth()->user()->id)->first();
+
+        return response()->json(['disliked' => $dislikedMovie ? true : false]);
     }
 
 }

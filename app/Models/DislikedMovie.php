@@ -10,4 +10,10 @@ class DislikedMovie extends Model
     use HasFactory;
     
     protected $table = 'disliked_movies';
+
+    protected $fillable = [
+        'user_id',
+        'imdbID',
+        'Title'
+    ];
 }

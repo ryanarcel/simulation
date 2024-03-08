@@ -27,7 +27,12 @@
 
 		<div class="lg:w-4/5 mx-auto mt-5">
 			<div v-if="searchResults" class="grid lg:grid-cols-4 md:grid-cols-2 gap-x-1 mt-10">
-				<Movie v-for="movie in searchResults" :movie="movie" @like-movie="likeMovie" />
+				<Movie
+          v-for="movie in searchResults"
+          :movie="movie"
+          @like-movie="likeMovie"
+          @dislike-movie="dislikeMovie"
+        />
 			</div>
 		</div>
 	</AuthenticatedLayout>
@@ -75,10 +80,10 @@ function submitSearch() {
 	router.visit(route("dashboard", { search: form.search }));
 }
 
-function likeMovie(data) {
-	router.post(route("likeMovie"), data, {
-    preserveScroll: true,
-    onSuccess: () => {
+async function likeMovie(data) {
+
+  await axios.post(route("likeMovie"), data).then((response) => {
+    if(response.data.liked) {
       toast.success(`${data.title} liked!`, {
         position: "bottom-center",
         timeout: 2000,
@@ -91,17 +96,54 @@ function likeMovie(data) {
         closeButton: "button",
         icon: true,
       });
-    },
-  });
-
-
-
-
-  
+    } else {
+      toast.info(`Like for ${data.title} removed`, {
+        position: "bottom-center",
+        timeout: 2000,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+      });
+    }
+  })
 }
 
-function fetchLikedStatus(movie_id) {
-	return router.get(route("getLikedStatus", { movie_id }));
+async function dislikeMovie(data) {
+
+await axios.post(route("dislikeMovie"), data).then((response) => {
+  if(response.data.disliked) {
+    toast.error(`${data.title} disliked!`, {
+      position: "bottom-center",
+      timeout: 2000,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      draggablePercent: 0.6,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: true,
+    });
+  } else {
+    toast.info(`Dislike for ${data.title} removed`, {
+      position: "bottom-center",
+      timeout: 2000,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      draggablePercent: 0.6,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: "button",
+      icon: true,
+    });
+  }
+})
 }
 
 onMounted(() => {
