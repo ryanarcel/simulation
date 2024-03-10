@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\LikedMovie;
+use App\Models\DislikedMovie;
 
 class User extends Authenticatable
 {
@@ -42,4 +44,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function likedMovies()
+    {
+        return $this->hasMany(LikedMovie::class);
+    }
+
+    public function dislikedMovies()
+    {
+        return $this->hasMany(DislikedMovie::class);
+    }
+
+
 }

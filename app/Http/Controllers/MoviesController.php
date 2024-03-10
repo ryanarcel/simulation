@@ -33,6 +33,21 @@ class MoviesController extends Controller
         return Inertia::render('Dashboard');
     }
 
+    public function show (){
+        $user = auth()->user();
+
+
+        // $user->load(
+        //     'likedMovies',
+        //     'dislikedMovies',
+        // );
+
+        return Inertia::render('MyMovies', [
+            'likedMovies' => $user->likedMovies,
+            'dislikedMovies' => $user->dislikedMovies,
+        ]);
+    }
+
     public function checkIfLiked ($imdbID)
     {
         $likedMovie = LikedMovie::where('imdbID', $imdbID)->where('user_id', auth()->user()->id)->first();
@@ -48,7 +63,7 @@ class MoviesController extends Controller
         ]);
 
         if($request->like) {
-            LikedMovie::updateOrCreate([
+            LikedMovie::firstOrCreate([
                 'user_id' => auth()->user()->id,
                 'imdbID' => $validated['movie_id'],
                 'Title' => $validated['title']
@@ -71,7 +86,7 @@ class MoviesController extends Controller
         ]);
 
         if($request->dislike) {
-            DislikedMovie::updateOrCreate([
+            DislikedMovie::firstOrCreate([
                 'user_id' => auth()->user()->id,
                 'imdbID' => $validated['movie_id'],
                 'Title' => $validated['title']

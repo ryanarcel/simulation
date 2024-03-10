@@ -17,6 +17,9 @@
 <script setup>
 import { ref, defineEmits, computed, onMounted } from 'vue'
 import { router } from '@inertiajs/vue3'
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 const emit = defineEmits([
   'like-movie',
@@ -55,6 +58,7 @@ async function checkIfDisliked (imdbID) {
 }
 
 function dislikeMovie () {
+  
   const data = {
     movie_id: props.movie.imdbID,
     title: props.movie.Title,

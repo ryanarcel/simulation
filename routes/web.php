@@ -33,6 +33,7 @@ Route::post('/dislike', [App\Http\Controllers\MoviesController::class, 'dislikeM
 
 Route::get('/check-if-disliked/{imdbID}', [App\Http\Controllers\MoviesController::class, 'checkIfDisliked'])->name('checkIfDisliked');
 
+Route::get('my-movies', [App\Http\Controllers\MoviesController::class, 'show'])->name('myMovies');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,5 +42,3 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
-Route::get('/test', [App\Http\Controllers\MoviesController::class, 'index']);
