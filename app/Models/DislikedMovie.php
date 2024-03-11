@@ -14,7 +14,8 @@ class DislikedMovie extends Model
     protected $fillable = [
         'user_id',
         'imdbID',
-        'Title'
+        'title',
+        'year',
     ];
 
     public function user()

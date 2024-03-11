@@ -43,6 +43,7 @@ function likeMovie () {
   const data = {
     movie_id: props.movie.imdbID,
     title: props.movie.Title,
+    year: props.movie.Year,
     like: likeStatus.value ? 0 : 1,
   }
   emit('like-movie', data)
@@ -62,6 +63,7 @@ function dislikeMovie () {
   const data = {
     movie_id: props.movie.imdbID,
     title: props.movie.Title,
+    year: props.movie.Year,
     dislike: dislikeStatus.value ? 0 : 1,
   }
   emit('dislike-movie', data)

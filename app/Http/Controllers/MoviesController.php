@@ -60,13 +60,15 @@ class MoviesController extends Controller
         $validated = $request->validate([
             'movie_id' => 'required',
             'title' => 'required',
+            'year' => 'required',
         ]);
 
         if($request->like) {
             LikedMovie::firstOrCreate([
                 'user_id' => auth()->user()->id,
                 'imdbID' => $validated['movie_id'],
-                'Title' => $validated['title']
+                'title' => $validated['title'],
+                'year' => $validated['year'],
             ]);
         } else {
             LikedMovie::where('imdbID', $validated['movie_id'])->delete();
@@ -74,6 +76,7 @@ class MoviesController extends Controller
 
         return response()->json([
             'movie' => $validated['title'],
+            'year' => $validated['year'],
             'liked' => $request->like ? true : false
         ]);
     }
@@ -83,13 +86,15 @@ class MoviesController extends Controller
         $validated = $request->validate([
             'movie_id' => 'required',
             'title' => 'required',
+            'year' => 'required',
         ]);
 
         if($request->dislike) {
             DislikedMovie::firstOrCreate([
                 'user_id' => auth()->user()->id,
                 'imdbID' => $validated['movie_id'],
-                'Title' => $validated['title']
+                'title' => $validated['title'],
+                'year' => $validated['year'],
             ]);
         } else {
             DislikedMovie::where('imdbID', $validated['movie_id'])->delete();
@@ -97,6 +102,7 @@ class MoviesController extends Controller
 
         return response()->json([
             'movie' => $validated['title'],
+            'year' => $validated['year'],
             'disliked' => $request->dislike ? true : false
         ]);
     }
