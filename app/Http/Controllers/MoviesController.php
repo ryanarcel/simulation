@@ -35,13 +35,7 @@ class MoviesController extends Controller
 
     public function show (){
         $user = auth()->user();
-
-
-        // $user->load(
-        //     'likedMovies',
-        //     'dislikedMovies',
-        // );
-
+        
         return Inertia::render('MyMovies', [
             'likedMovies' => $user->likedMovies,
             'dislikedMovies' => $user->dislikedMovies,
