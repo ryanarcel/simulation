@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::table('liked_movies', function (Blueprint $table) {
             $table->renameColumn('Title', 'title');
-            $table->year('year')->after('Title');
+            $table->String('year')->after('title');
         });
         Schema::table('disliked_movies', function (Blueprint $table) {
             $table->renameColumn('Title', 'title');
-            $table->year('year')->after('Title');
+            $table->String('year')->after('title');
         });
     }
 

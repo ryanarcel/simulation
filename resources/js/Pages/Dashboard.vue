@@ -115,35 +115,35 @@ async function likeMovie(data) {
 
 async function dislikeMovie(data) {
 
-await axios.post(route("dislikeMovie"), data).then((response) => {
-  if(response.data.disliked) {
-    toast.error(`${data.title} disliked!`, {
-      position: "bottom-center",
-      timeout: 2000,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      draggablePercent: 0.6,
-      showCloseButtonOnHover: false,
-      hideProgressBar: true,
-      closeButton: "button",
-      icon: true,
-    });
-  } else {
-    toast.info(`Dislike for ${data.title} removed`, {
-      position: "bottom-center",
-      timeout: 2000,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      draggablePercent: 0.6,
-      showCloseButtonOnHover: false,
-      hideProgressBar: true,
-      closeButton: "button",
-      icon: true,
-    });
-  }
-})
+  await axios.post(route("dislikeMovie"), data).then((response) => {
+    if(response.data.disliked) {
+      toast.error(`${data.title} disliked!`, {
+        position: "bottom-center",
+        timeout: 2000,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+      });
+    } else {
+      toast.info(`Dislike for ${data.title} removed`, {
+        position: "bottom-center",
+        timeout: 2000,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+      });
+    }
+  })
 }
 
 onMounted(() => {

@@ -26,14 +26,17 @@ Route::get('/dashboard', [App\Http\Controllers\MoviesController::class, 'index']
 Route::post('/like', [App\Http\Controllers\MoviesController::class, 'likeMovie'])
 ->middleware(['auth', 'verified'])->name('likeMovie');
 
-Route::get('/check-if-liked/{imdbID}', [App\Http\Controllers\MoviesController::class, 'checkIfLiked'])->name('checkIfLiked');
-
 Route::post('/dislike', [App\Http\Controllers\MoviesController::class, 'dislikeMovie'])
 ->middleware(['auth', 'verified'])->name('dislikeMovie');
 
-Route::get('/check-if-disliked/{imdbID}', [App\Http\Controllers\MoviesController::class, 'checkIfDisliked'])->name('checkIfDisliked');
+Route::get('/check-if-liked/{imdbID}', [App\Http\Controllers\MoviesController::class, 'checkIfLiked'])
+->middleware('auth')->name('checkIfLiked');
 
-Route::get('my-movies', [App\Http\Controllers\MoviesController::class, 'show'])->name('myMovies');
+Route::get('/check-if-disliked/{imdbID}', [App\Http\Controllers\MoviesController::class, 'checkIfDisliked'])
+->middleware('auth')->name('checkIfDisliked');
+
+Route::get('my-movies', [App\Http\Controllers\MoviesController::class, 'show'])
+->middleware('auth')->name('myMovies');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
