@@ -29,6 +29,7 @@ const emit = defineEmits([
 const props = defineProps({
   movie: Object,
   liked: Boolean,
+  disliked: Boolean,
 })
 
 const likeStatus = ref(false);
@@ -47,7 +48,9 @@ function likeMovie () {
     like: likeStatus.value ? 0 : 1,
   }
   emit('like-movie', data)
-  checkIfLiked(props.movie.imdbID)
+  setTimeout(() => {
+    checkIfLiked(props.movie.imdbID)
+  }, 200)
 }
 
 const dislikeStatus= ref(false);
@@ -67,7 +70,9 @@ function dislikeMovie () {
     dislike: dislikeStatus.value ? 0 : 1,
   }
   emit('dislike-movie', data)
-  checkIfDisliked(props.movie.imdbID)
+  setTimeout(() => {
+    checkIfDisliked(props.movie.imdbID)
+  }, 200)
 }
 
 const commentStatus = ref(false);

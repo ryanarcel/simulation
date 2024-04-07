@@ -119,22 +119,24 @@ async function likeMovie(movie) {
     year: movie.year,
   };
 
-  router.visit(route('myMovies'));
-
   await axios.post(route("likeMovie"), data).then((response) => {
 
-    toast.info(`Dislike for ${data.title} removed`, {
-      position: "bottom-center",
-      timeout: 2000,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      draggablePercent: 0.6,
-      showCloseButtonOnHover: false,
-      hideProgressBar: true,
-      closeButton: "button",
-      icon: true,
-    });
+    if (response.status === 200) {
+      toast.info(`Dislike for ${data.title} removed`, {
+        position: "bottom-center",
+        timeout: 2000,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+      });
+      
+      router.visit(route('myMovies'));
+    }
     
   });
 }
@@ -148,18 +150,24 @@ async function dislikeMovie(movie) {
 
   await axios.post(route("dislikeMovie"), data).then((response) => {
 
-    toast.info(`Dislike for ${data.title} removed`, {
-      position: "bottom-center",
-      timeout: 2000,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      draggablePercent: 0.6,
-      showCloseButtonOnHover: false,
-      hideProgressBar: true,
-      closeButton: "button",
-      icon: true,
-    });
+    console.log(response.status)
+
+    if (response.status === 200) { 
+      toast.info(`Dislike for ${data.title} removed`, {
+        position: "bottom-center",
+        timeout: 2000,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+      });
+
+      router.visit(route('myMovies'));
+    }
     
   });
 }
