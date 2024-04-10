@@ -122,7 +122,7 @@ async function likeMovie(movie) {
   await axios.post(route("likeMovie"), data).then((response) => {
 
     if (response.status === 200) {
-      toast.info(`Dislike for ${data.title} removed`, {
+      toast.info(`Like for ${data.title} removed`, {
         position: "bottom-center",
         timeout: 2000,
         closeOnClick: true,

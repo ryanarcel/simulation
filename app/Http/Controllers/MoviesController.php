@@ -57,23 +57,44 @@ class MoviesController extends Controller
             'year' => 'required',
         ]);
 
-        if($request->like) {
-            LikedMovie::firstOrCreate([
-                'user_id' => auth()->user()->id,
-                'imdbID' => $validated['movie_id'],
-                'title' => $validated['title'],
-                'year' => $validated['year'],
-            ]);
-        } else {
-            LikedMovie::where('user_id', auth()->user()->id)
-            ->where('imdbID', $validated['movie_id'])->delete();
-        }
+        $checkifDisliked = DislikedMovie::where('imdbID', $validated['movie_id'])
+        ->where('user_id', auth()->user()->id)->get();
 
-        return response()->json([
-            'movie' => $validated['title'],
-            'year' => $validated['year'],
-            'liked' => $request->like ? true : false
-        ]);
+        if($checkifDisliked->isNotEmpty()) {
+            return response()->json([
+               'status' => 401,
+               'message' => 'Movie is already disliked'
+            ]);
+        }
+        else {
+            if ($request->like) {
+                LikedMovie::firstOrCreate([
+                    'user_id' => auth()->user()->id,
+                    'imdbID' => $validated['movie_id'],
+                    'title' => $validated['title'],
+                    'year' => $validated['year'],
+                ]);
+
+                return response()->json([
+                    'movie' => $validated['title'],
+                    'year' => $validated['year'],
+                    'liked' => $request->like ? true : false,
+                    'status' => 203,
+                ]);
+
+            } else {
+                LikedMovie::where('user_id', auth()->user()->id)
+                ->where('imdbID', $validated['movie_id'])->delete();
+
+                return response()->json([
+                    'movie' => $validated['title'],
+                    'year' => $validated['year'],
+                    'liked' => $request->like ? true : false,
+                    'status' => 204,
+                ]);
+            }
+
+        }
     }
 
     public function dislikeMovie (Request $request)
@@ -84,23 +105,45 @@ class MoviesController extends Controller
             'year' => 'required',
         ]);
 
-        if($request->dislike) {
-            DislikedMovie::firstOrCreate([
-                'user_id' => auth()->user()->id,
-                'imdbID' => $validated['movie_id'],
-                'title' => $validated['title'],
-                'year' => $validated['year'],
-            ]);
-        } else {
-            DislikedMovie::where('user_id', auth()->user()->id)
-            ->where('imdbID', $validated['movie_id'])->delete();
+        $checkifLiked = LikedMovie::where('imdbID', $validated['movie_id'])
+        ->where('user_id', auth()->user()->id)->get();
+
+        if ($checkifLiked->isNotempty()) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Movie is already liked'
+             ]);
+        }
+        else {
+            if($request->dislike) {
+                DislikedMovie::firstOrCreate([
+                    'user_id' => auth()->user()->id,
+                    'imdbID' => $validated['movie_id'],
+                    'title' => $validated['title'],
+                    'year' => $validated['year'],
+                ]);
+
+                return response()->json([
+                    'movie' => $validated['title'],
+                    'year' => $validated['year'],
+                    'disliked' => $request->dislike ? true : false,
+                    'status' => 203,
+                ]);
+
+            } else {
+                DislikedMovie::where('user_id', auth()->user()->id)
+                ->where('imdbID', $validated['movie_id'])->delete();
+
+                return response()->json([
+                    'movie' => $validated['title'],
+                    'year' => $validated['year'],
+                    'disliked' => $request->dislike ? true : false,
+                    'status' => 204,
+                ]);
+            }
         }
 
-        return response()->json([
-            'movie' => $validated['title'],
-            'year' => $validated['year'],
-            'disliked' => $request->dislike ? true : false
-        ]);
+
     }
 
     public function checkIfDisliked ($imdbID)
@@ -112,8 +155,8 @@ class MoviesController extends Controller
 
     public function delete($imdbID)
     {
-        LikedMovie::where('imdbID', $imdbID)->delete();
-        DislikedMovie::where('imdbID', $imdbID)->delete();
+        LikedMovie::where('imdbID', $imdbID)->where('user_id', auth()->user()->id)->delete();
+        DislikedMovie::where('imdbID', $imdbID)->where('user_id', auth()->user()->id)->delete();
 
         return redirect()->back();
     }

@@ -81,7 +81,7 @@ function submitSearch() {
 
 async function likeMovie(data) {
   await axios.post(route("likeMovie"), data).then((response) => {
-    if (response.data.liked) {
+    if (response.data.status === 203) {
       toast.success(`${data.title} liked!`, {
         position: "bottom-center",
         timeout: 2000,
@@ -94,8 +94,21 @@ async function likeMovie(data) {
         closeButton: "button",
         icon: true,
       });
-    } else {
-      toast.info(`Like for ${data.title} removed`, {
+    } else if (response.data.status === 204) {
+      toast.info(`Like removed for ${data.title}`, {
+        position: "bottom-center",
+        timeout: 2000,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+      });
+    } else if (response.data.status === 401) {
+      toast.warning(`Cannot like disliked movie`, {
         position: "bottom-center",
         timeout: 2000,
         closeOnClick: true,
@@ -113,7 +126,7 @@ async function likeMovie(data) {
 
 async function dislikeMovie(data) {
   await axios.post(route("dislikeMovie"), data).then((response) => {
-    if (response.data.disliked) {
+    if (response.data.status === 203) {
       toast.error(`${data.title} disliked!`, {
         position: "bottom-center",
         timeout: 2000,
@@ -126,8 +139,22 @@ async function dislikeMovie(data) {
         closeButton: "button",
         icon: true,
       });
-    } else {
-      toast.info(`Dislike for ${data.title} removed`, {
+    } else if (response.data.status === 204) {
+      toast.info(`Disike removed for ${data.title}`, {
+        position: "bottom-center",
+        timeout: 2000,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: "button",
+        icon: true,
+      });
+    }
+    else if (response.data.status === 401) {
+      toast.warning(`Cannot dislike liked movie`, {
         position: "bottom-center",
         timeout: 2000,
         closeOnClick: true,
