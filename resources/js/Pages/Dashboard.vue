@@ -95,7 +95,7 @@ async function likeMovie(data) {
         icon: true,
       });
     } else if (response.data.status === 204) {
-      toast.info(`Like removed for ${data.title}`, {
+      toast.error(`Like removed for ${data.title}`, {
         position: "bottom-center",
         timeout: 2000,
         closeOnClick: true,
@@ -108,7 +108,7 @@ async function likeMovie(data) {
         icon: true,
       });
     } else if (response.data.status === 401) {
-      toast.warning(`Cannot like disliked movie`, {
+      toast.error(`Cannot like disliked movie`, {
         position: "bottom-center",
         timeout: 2000,
         closeOnClick: true,
@@ -127,7 +127,7 @@ async function likeMovie(data) {
 async function dislikeMovie(data) {
   await axios.post(route("dislikeMovie"), data).then((response) => {
     if (response.data.status === 203) {
-      toast.error(`${data.title} disliked!`, {
+      toast.warning(`${data.title} disliked!`, {
         position: "bottom-center",
         timeout: 2000,
         closeOnClick: true,
@@ -140,7 +140,7 @@ async function dislikeMovie(data) {
         icon: true,
       });
     } else if (response.data.status === 204) {
-      toast.info(`Disike removed for ${data.title}`, {
+      toast.error(`Disike removed for ${data.title}`, {
         position: "bottom-center",
         timeout: 2000,
         closeOnClick: true,
@@ -154,7 +154,7 @@ async function dislikeMovie(data) {
       });
     }
     else if (response.data.status === 401) {
-      toast.warning(`Cannot dislike liked movie`, {
+      toast.error(`Cannot dislike liked movie`, {
         position: "bottom-center",
         timeout: 2000,
         closeOnClick: true,
