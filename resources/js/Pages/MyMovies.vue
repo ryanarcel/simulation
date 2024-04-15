@@ -9,7 +9,7 @@
       </h2>
     </template>
 
-    <div class="lg:w-3/5 md:2/5 mx-auto mt-5">
+    <div class="lg:w-3/5 md:w-2/5 mx-auto mt-5">
       <div class="overflow-x-auto">
         <h1 class="font-bold">Liked Movies</h1>
         <table class="table-auto w-full border-collapse">
