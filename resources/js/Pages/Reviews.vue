@@ -11,10 +11,14 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, watchEffect } from 'vue';
+import { ref, reactive, computed, watchEffect, defineProps } from 'vue';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
-// Your script code here
+const props = defineProps({
+  comments: Array,
+
+});
+
 
 </script>
 

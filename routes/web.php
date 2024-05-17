@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,9 @@ Route::get('/check-if-disliked/{imdbID}', [App\Http\Controllers\MoviesController
 
 Route::get('my-movies', [App\Http\Controllers\MoviesController::class, 'show'])
 ->middleware('auth')->name('myMovies');
+
+Route::get('reviews', [CommentsController::class, 'show'])
+->middleware('reviews')->name('reviews');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
